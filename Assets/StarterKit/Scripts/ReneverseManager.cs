@@ -13,8 +13,10 @@ public class ReneverseManager : MonoBehaviour
 {
     #region Static Fields
     public static bool LoginStatus = false;
-    public static Dictionary<Asset, int> NFTCounter = new();
-    public static string EmailHandler;
+    public static bool IsAssetLoaded = false;
+
+    public static List<Asset> NFTCounter = new();
+    public static API ReneAPI;
     #endregion
 
     [Header("Sign In Properties")]
@@ -28,8 +30,6 @@ public class ReneverseManager : MonoBehaviour
     public TextMeshProUGUI Timer;
     public int TimeToWait = 30;
 
-    API ReneAPI;
-    
     void Start()
     {
         SignInButton.GetComponent<Button>().onClick.AddListener(SignIn);
@@ -58,7 +58,7 @@ public class ReneverseManager : MonoBehaviour
 
         ReneAPI = ReneAPIManager.API();
         
-        EmailHandler = Email.GetComponent<TMP_InputField>().text;
+        string EmailHandler = Email.GetComponent<TMP_InputField>().text;
 
         if (!EmailHandler.IsEmail())
         {
@@ -116,23 +116,28 @@ public class ReneverseManager : MonoBehaviour
         AssetsResponse.AssetsData userAssets = await reneApi.Game().Assets();
         userAssets?.Items.ForEach(asset =>
         {
-            Asset thisAsset = new()
-            {
-                AssetName = asset.Metadata.Name,
-                Description = asset.Metadata.Description,
-                AssetUrl = asset.Metadata.Image,
-                TemplateID = asset.AssetTemplateId
-            };
+            Asset thisAsset = new(asset.Metadata.Name, asset.Metadata.Description, asset.Metadata.Image, asset.AssetTemplateId);
 
-            NFTCounter[thisAsset]++;
+            NFTCounter.Add(thisAsset);
+
         });
+        IsAssetLoaded = true;
     }
 }
 
+//Asset Class
+[Serializable]
 public class Asset
 {
-    public string AssetName { get; set; }
-    public string Description { get; set; }
-    public string AssetUrl { get; set; }
-    public string TemplateID { get; set; }
+    public string AssetName;
+    public string Description;
+    public string AssetUrl;
+    public string TemplateID;
+    public Asset(string assetName, string description, string assetUrl, string templateID)
+    {
+        AssetName = assetName;
+        Description = description;
+        AssetUrl = assetUrl;
+        TemplateID = templateID;
+    }
 }
