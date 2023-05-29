@@ -34,6 +34,7 @@ public class ReneverseManager : MonoBehaviour
     {
         SignInButton.GetComponent<Button>().onClick.AddListener(SignIn);
         if(SignUpButton) SignUpButton.onClick.AddListener(SignUp);
+
         if (LoginStatus)
         {
             SignInPanel.SetActive(false);
@@ -41,6 +42,7 @@ public class ReneverseManager : MonoBehaviour
         }
     }
 
+    #region Button Actions
     public async void SignIn()
     {
         await ConnectUser();
@@ -50,6 +52,7 @@ public class ReneverseManager : MonoBehaviour
     {
         Application.OpenURL("https://app.reneverse.io/register");
     }
+    #endregion
 
     //Connect User function
     async Task ConnectUser()

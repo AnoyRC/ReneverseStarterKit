@@ -899,7 +899,7 @@ GameObject:
   - component: {fileID: 437792838}
   - component: {fileID: 437792837}
   m_Layer: 5
-  m_Name: All Assets
+  m_Name: Asset Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
