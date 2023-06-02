@@ -28,8 +28,12 @@ public class ReneverseMintManager : MonoBehaviour
     {
         try
         {
+            var res = await ReneverseManager.ReneAPI.User().Search("A");
+            Debug.Log(res);
+
             var response = await ReneverseManager.ReneAPI.Game().AssetMint(templateID);
             Debug.Log(response);
+
             Debug.Log("Asset Minting in progress");
         }
         catch (Exception e)

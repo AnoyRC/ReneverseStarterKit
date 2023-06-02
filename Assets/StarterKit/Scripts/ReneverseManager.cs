@@ -79,6 +79,7 @@ public class ReneverseManager : MonoBehaviour
             SignInButton.SetActive(true);
             return;
         }
+
         StartCoroutine(ConnectReneService(ReneAPI));
     }
 
