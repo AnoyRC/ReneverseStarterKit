@@ -17,44 +17,53 @@ public class ReneverseUserManager : MonoBehaviour
     [Header("Parent of the Panel")]
     public GameObject Parent;
 
-    public User SelectedUser;
-
     private List<User> users = new();
 
-    // Start is called before the first frame update
+    public static User SelectedUser;
+    
+    public static ReneverseUserManager Instance;
+
+    [SerializeField]
+    private User selectedUser;
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         SearchInput.GetComponent<TMP_InputField>().onValueChanged.AddListener(delegate 
         {
             ResetSearch();
-            SearchUser(); 
+            StartCoroutine(SearchUser(0.3f)); 
         });
 
         SearchInput.GetComponent<TMP_InputField>().onSelect.AddListener(delegate
         {
-            TogglePanel(true);
+            StartCoroutine(TogglePanel(true, 0));
         });
 
         SearchInput.GetComponent<TMP_InputField>().onDeselect.AddListener(delegate
         {
-            TogglePanel(false);
+            StartCoroutine(TogglePanel(false, 2));
         });
     }
 
-    async void SearchUser()
+    IEnumerator SearchUser(float time)
     {
         string term = SearchInput.GetComponent<TMP_InputField>().text;
-        await Search(term);
+        yield return new WaitForSeconds(time);
+        yield return Search(term);
     }
 
     public async Task Search(string term)
     {
+        if (term.Length == 0) return;
         try
         {
-            UsersResponse.UsersData usersData = await ReneverseManager.ReneAPI.User().Search(term);
-            Debug.Log(usersData.Items.Count);
-
             if (term != SearchInput.GetComponent<TMP_InputField>().text) return;
+
+            UsersResponse.UsersData usersData = await ReneverseManager.ReneAPI.User().Search(term);
 
             foreach (UserResponse.UserData user in usersData.Items)
             {
@@ -80,6 +89,15 @@ public class ReneverseUserManager : MonoBehaviour
         }
     }
 
+    public void SelectUser(string name, string userId)
+    {
+        User thisUser = new(name, userId);
+        SelectedUser = thisUser;
+        Serialize();
+        SearchInput.GetComponent<TMP_InputField>().text = name;
+        StartCoroutine(TogglePanel(false, 0));
+    }
+
     //Clear List and UI
     private void ResetSearch()
     {
@@ -87,13 +105,20 @@ public class ReneverseUserManager : MonoBehaviour
 
         foreach (Transform child in Panel.transform)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
     }
 
-    void TogglePanel(bool Switch)
+    IEnumerator TogglePanel(bool Switch, float time)
     {
+        yield return new WaitForSeconds(time);
         Parent.SetActive(Switch);
+    }
+
+    public void Serialize()
+    {
+        selectedUser.Name = SelectedUser.Name;
+        selectedUser.UserId = SelectedUser.UserId;
     }
 }
 
