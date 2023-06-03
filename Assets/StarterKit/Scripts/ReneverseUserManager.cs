@@ -14,6 +14,8 @@ public class ReneverseUserManager : MonoBehaviour
     public GameObject UserPrefab;
     [Header("Search Term Input Field")]
     public GameObject SearchInput;
+    [Header("Parent of the Panel")]
+    public GameObject Parent;
 
     public User SelectedUser;
 
@@ -23,8 +25,19 @@ public class ReneverseUserManager : MonoBehaviour
     void Start()
     {
         SearchInput.GetComponent<TMP_InputField>().onValueChanged.AddListener(delegate 
-        { 
+        {
+            ResetSearch();
             SearchUser(); 
+        });
+
+        SearchInput.GetComponent<TMP_InputField>().onSelect.AddListener(delegate
+        {
+            TogglePanel(true);
+        });
+
+        SearchInput.GetComponent<TMP_InputField>().onDeselect.AddListener(delegate
+        {
+            TogglePanel(false);
         });
     }
 
@@ -36,11 +49,13 @@ public class ReneverseUserManager : MonoBehaviour
 
     public async Task Search(string term)
     {
-        users.Clear();
         try
         {
             UsersResponse.UsersData usersData = await ReneverseManager.ReneAPI.User().Search(term);
             Debug.Log(usersData.Items.Count);
+
+            if (term != SearchInput.GetComponent<TMP_InputField>().text) return;
+
             foreach (UserResponse.UserData user in usersData.Items)
             {
                 User thisUser = new(user.Data.FirstName + " " + user.Data.LastName, user.UserId);
@@ -63,6 +78,22 @@ public class ReneverseUserManager : MonoBehaviour
             asset.transform.SetParent(Panel.transform, false);
             asset.GetComponent<UserPrefabManager>().Initialize(entry);
         }
+    }
+
+    //Clear List and UI
+    private void ResetSearch()
+    {
+        users.Clear();
+
+        foreach (Transform child in Panel.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
+    void TogglePanel(bool Switch)
+    {
+        Parent.SetActive(Switch);
     }
 }
 
