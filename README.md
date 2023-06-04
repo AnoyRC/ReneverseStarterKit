@@ -6,7 +6,7 @@
 </p>
 <h1 align="center">Reneverse Starter Kit</h1>
 <p align="center">
-<img alt="Last Commit" src="https://img.shields.io/badge/Latest-1.0.2-brightgreen?style=for-the-badge"/>
+<img alt="Last Commit" src="https://img.shields.io/badge/Latest-1.0.4-brightgreen?style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Unity-2021.3.24f1-%23100000?style=for-the-badge" alt="Unity Version"/>
 <img alt="Last Commit" src="https://img.shields.io/github/last-commit/anoyrc/ReneverseStarterKit?style=for-the-badge"/>
 </p>
@@ -22,3 +22,6 @@
 - Countdown Verification
 - Fetching Assets based on API Credentials provided & User Connected
 - Minting Assets with provided Template ID
+- Transfer Assets
+- Search User connected to your game
+- Select Asset from asset list
