@@ -28,6 +28,8 @@ public class UserPrefabManager : MonoBehaviour
         Name.text = ThisUser.Name;
     }
 
+    //Select User
+    //Dependencies : Reneverse User Manager
     public void SelectUser()
     {
         ReneverseUserManager.SelectUser(ThisUser.Name, ThisUser.UserId);

@@ -62,6 +62,7 @@
     <Compile Include="Assets\StarterKit\Scripts\ReneverseAssetManager.cs" />
     <Compile Include="Assets\StarterKit\Scripts\UserPrefabManager.cs" />
     <Compile Include="Assets\StarterKit\Scripts\ReneverseUserManager.cs" />
+    <Compile Include="Assets\StarterKit\Scripts\ReneverseTransfer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

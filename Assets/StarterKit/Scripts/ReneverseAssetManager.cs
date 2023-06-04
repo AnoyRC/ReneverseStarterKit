@@ -46,9 +46,10 @@ public class ReneverseAssetManager : MonoBehaviour
         }
     }
 
-    public void SelectAsset(string assetName, string description, string assetUrl, string templateId)
+    //Selected Asset
+    public void SelectAsset(string assetName, string description, string assetUrl, string templateId, string nftId)
     {
-        Asset thisAsset = new(assetName, description, assetUrl, templateId);
+        Asset thisAsset = new(assetName, description, assetUrl, templateId, nftId);
         SelectedAsset = thisAsset;
         Serialize();
 
@@ -58,11 +59,14 @@ public class ReneverseAssetManager : MonoBehaviour
         }
     }
 
+    #region Show Selected Asset in Inspector
     public void Serialize()
     {
         selectedAsset.AssetName = SelectedAsset.AssetName;
         selectedAsset.Description = SelectedAsset.Description;
         selectedAsset.AssetUrl = SelectedAsset.AssetUrl;
         selectedAsset.TemplateID = SelectedAsset.TemplateID;
+        selectedAsset.NFTId = SelectedAsset.NFTId;
     }
+    #endregion
 }

@@ -23,6 +23,7 @@ public class ReneverseUserManager : MonoBehaviour
     
     public static ReneverseUserManager Instance;
 
+    [Header("Selected User")]
     [SerializeField]
     private User selectedUser;
     void Awake()
@@ -32,23 +33,27 @@ public class ReneverseUserManager : MonoBehaviour
 
     void Start()
     {
+        //Search OnValueChanged with delay
         SearchInput.GetComponent<TMP_InputField>().onValueChanged.AddListener(delegate 
         {
             ResetSearch();
-            StartCoroutine(SearchUser(0.3f)); 
+            StartCoroutine(SearchUser(0.5f)); 
         });
 
+        //Open Dropdown
         SearchInput.GetComponent<TMP_InputField>().onSelect.AddListener(delegate
         {
             StartCoroutine(TogglePanel(true, 0));
         });
 
+        //Close Dropdown with delay
         SearchInput.GetComponent<TMP_InputField>().onDeselect.AddListener(delegate
         {
             StartCoroutine(TogglePanel(false, 2));
         });
     }
 
+    // Search User after delay
     IEnumerator SearchUser(float time)
     {
         string term = SearchInput.GetComponent<TMP_InputField>().text;
@@ -56,6 +61,8 @@ public class ReneverseUserManager : MonoBehaviour
         yield return Search(term);
     }
 
+    // Search User with Search Term provided
+    // Dependencies : Reneverse Manager
     public async Task Search(string term)
     {
         if (term.Length == 0) return;
@@ -79,6 +86,7 @@ public class ReneverseUserManager : MonoBehaviour
         }
     }
 
+    //Instantiate Users in Canvas
     void LoadUsers()
     {
         foreach (var entry in users)
@@ -89,6 +97,7 @@ public class ReneverseUserManager : MonoBehaviour
         }
     }
 
+    //Select User
     public void SelectUser(string name, string userId)
     {
         User thisUser = new(name, userId);
@@ -109,17 +118,20 @@ public class ReneverseUserManager : MonoBehaviour
         }
     }
 
+    //Drop down controller
     IEnumerator TogglePanel(bool Switch, float time)
     {
         yield return new WaitForSeconds(time);
         Parent.SetActive(Switch);
     }
 
+    #region Show Selected User in Inspector
     public void Serialize()
     {
         selectedUser.Name = SelectedUser.Name;
         selectedUser.UserId = SelectedUser.UserId;
     }
+    #endregion
 }
 
 [Serializable]

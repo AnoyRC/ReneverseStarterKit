@@ -24,6 +24,7 @@ public class ReneverseMintManager : MonoBehaviour
     }
 
     //Mint function
+    //Dependencies : Reneverse Manager
     public async Task Mint(string templateID)
     {
         try

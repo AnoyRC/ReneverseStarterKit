@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class AssetPrefabManager : MonoBehaviour
 {
+    public GameObject SelectedIndicator;
+
     [Header("Asset Details")]
     public Asset NFT;
 
@@ -17,9 +19,9 @@ public class AssetPrefabManager : MonoBehaviour
     public Image image;
     public TextMeshProUGUI TemplateID;
 
-    public GameObject SelectedIndicator;
-
     private ReneverseAssetManager assetManager;
+
+    public static GameObject SelectedAsset;
 
     void Start()
     {
@@ -58,9 +60,11 @@ public class AssetPrefabManager : MonoBehaviour
         }
     }
 
+    //Select Asset onClick
     public void SelectAsset()
     {
-        assetManager.SelectAsset(NFT.AssetName, NFT.Description, NFT.AssetUrl, NFT.TemplateID);
+        assetManager.SelectAsset(NFT.AssetName, NFT.Description, NFT.AssetUrl, NFT.TemplateID, NFT.NFTId);
         SelectedIndicator.SetActive(true);
+        SelectedAsset = gameObject;
     }
 }

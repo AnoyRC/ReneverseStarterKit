@@ -120,7 +120,7 @@ public class ReneverseManager : MonoBehaviour
         AssetsResponse.AssetsData userAssets = await reneApi.Game().Assets();
         userAssets?.Items.ForEach(asset =>
         {
-            Asset thisAsset = new(asset.Metadata.Name, asset.Metadata.Description, asset.Metadata.Image, asset.AssetTemplateId);
+            Asset thisAsset = new(asset.Metadata.Name, asset.Metadata.Description, asset.Metadata.Image, asset.AssetTemplateId, asset.NftId);
 
             NFTCounter.Add(thisAsset);
 
@@ -137,11 +137,13 @@ public class Asset
     public string Description;
     public string AssetUrl;
     public string TemplateID;
-    public Asset(string assetName, string description, string assetUrl, string templateID)
+    public string NFTId;
+    public Asset(string assetName, string description, string assetUrl, string templateID, string nftId)
     {
         AssetName = assetName;
         Description = description;
         AssetUrl = assetUrl;
         TemplateID = templateID;
+        NFTId = nftId;
     }
 }
