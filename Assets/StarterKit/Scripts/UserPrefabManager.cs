@@ -11,7 +11,7 @@ public class UserPrefabManager : MonoBehaviour
     [Header("UI Inputs")]
     public TextMeshProUGUI Name;
 
-    public ReneverseUserManager ReneverseUserManager;
+    private ReneverseUserManager ReneverseUserManager;
 
     void Start()
     {

@@ -17,6 +17,15 @@ public class AssetPrefabManager : MonoBehaviour
     public Image image;
     public TextMeshProUGUI TemplateID;
 
+    public GameObject SelectedIndicator;
+
+    private ReneverseAssetManager assetManager;
+
+    void Start()
+    {
+        assetManager = ReneverseAssetManager.Instance;        
+    }
+
     //Initialize the UI content
     public void Initialize(Asset asset)
     {
@@ -47,5 +56,11 @@ public class AssetPrefabManager : MonoBehaviour
 
             image.overrideSprite = newSprite;
         }
+    }
+
+    public void SelectAsset()
+    {
+        assetManager.SelectAsset(NFT.AssetName, NFT.Description, NFT.AssetUrl, NFT.TemplateID);
+        SelectedIndicator.SetActive(true);
     }
 }

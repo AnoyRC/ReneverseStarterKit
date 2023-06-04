@@ -810,6 +810,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReneverseManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6474363829181216386, guid: 625b374dd2c3ea249a25f713fb64de3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6474363829181216387, guid: 625b374dd2c3ea249a25f713fb64de3d, type: 3}
       propertyPath: m_RootOrder
       value: 3
